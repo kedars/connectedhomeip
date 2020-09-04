@@ -65,9 +65,6 @@ EmberAfStatus emberAfScenesClusterClientCommandParse(EmberAfClusterCommand * cmd
 // Cluster: Scenes, server
 EmberAfStatus emberAfScenesClusterServerCommandParse(EmberAfClusterCommand * cmd);
 
-// Cluster: On/off, server
-EmberAfStatus emberAfOnOffClusterServerCommandParse(EmberAfClusterCommand * cmd);
-
 // Cluster: Level Control, server
 EmberAfStatus emberAfLevelControlClusterServerCommandParse(EmberAfClusterCommand * cmd);
 

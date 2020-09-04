@@ -275,3 +275,36 @@ static bool areStartUpOnOffServerAttributesTokenized(uint8_t endpoint)
     return true;
 }
 #endif
+
+// Cluster: On/off, server
+EmberAfStatus emberAfOnOffClusterServerCommandParse(EmberAfClusterCommand * cmd)
+{
+    bool wasHandled = false;
+    if (!cmd->mfgSpecific)
+    {
+        switch (cmd->commandId)
+        {
+        case ZCL_OFF_COMMAND_ID: {
+            // Command is fixed length: 0
+            wasHandled = emberAfOnOffClusterOffCallback();
+            break;
+        }
+        case ZCL_ON_COMMAND_ID: {
+            // Command is fixed length: 0
+            wasHandled = emberAfOnOffClusterOnCallback();
+            break;
+        }
+        case ZCL_TOGGLE_COMMAND_ID: {
+            // Command is fixed length: 0
+            wasHandled = emberAfOnOffClusterToggleCallback();
+            break;
+        }
+        default: {
+            // Unrecognized command ID, error status will apply.
+            break;
+        }
+        }
+    }
+    return wasHandled ? EMBER_ZCL_STATUS_SUCCESS : EMBER_ZCL_STATUS_UNSUP_CLUSTER_COMMAND;
+}
+

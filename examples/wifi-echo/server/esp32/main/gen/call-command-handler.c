@@ -57,6 +57,7 @@
 #include "af-structs.h"
 #include "call-command-handler.h"
 #include "callback.h"
+#include "chip-command-handler.h"
 #include "command-id.h"
 #include "util.h"
 
@@ -123,7 +124,7 @@ EmberAfStatus emberAfClusterSpecificCommandParse(EmberAfClusterCommand * cmd)
             result = emberAfIasZoneClusterClientCommandParse(cmd);
             break;
         default:
-            // Unrecognized cluster ID, error status will apply.
+            result = ChipClusterCmdParse(cmd);
             break;
         }
     }
@@ -144,9 +145,6 @@ EmberAfStatus emberAfClusterSpecificCommandParse(EmberAfClusterCommand * cmd)
         case ZCL_SCENES_CLUSTER_ID:
             result = emberAfScenesClusterServerCommandParse(cmd);
             break;
-        case ZCL_ON_OFF_CLUSTER_ID:
-            result = emberAfOnOffClusterServerCommandParse(cmd);
-            break;
         case ZCL_ON_OFF_SWITCH_CONFIG_CLUSTER_ID:
             result = status(false, true, cmd->mfgSpecific);
             break;
@@ -166,7 +164,7 @@ EmberAfStatus emberAfClusterSpecificCommandParse(EmberAfClusterCommand * cmd)
             result = emberAfIasZoneClusterServerCommandParse(cmd);
             break;
         default:
-            // Unrecognized cluster ID, error status will apply.
+            result = ChipClusterCmdParse(cmd);
             break;
         }
     }
@@ -787,38 +785,6 @@ EmberAfStatus emberAfScenesClusterServerCommandParse(EmberAfClusterCommand * cmd
             }
             groupId    = emberAfGetInt16u(cmd->buffer, payloadOffset, cmd->bufLen);
             wasHandled = emberAfScenesClusterGetSceneMembershipCallback(groupId);
-            break;
-        }
-        default: {
-            // Unrecognized command ID, error status will apply.
-            break;
-        }
-        }
-    }
-    return status(wasHandled, true, cmd->mfgSpecific);
-}
-
-// Cluster: On/off, server
-EmberAfStatus emberAfOnOffClusterServerCommandParse(EmberAfClusterCommand * cmd)
-{
-    bool wasHandled = false;
-    if (!cmd->mfgSpecific)
-    {
-        switch (cmd->commandId)
-        {
-        case ZCL_OFF_COMMAND_ID: {
-            // Command is fixed length: 0
-            wasHandled = emberAfOnOffClusterOffCallback();
-            break;
-        }
-        case ZCL_ON_COMMAND_ID: {
-            // Command is fixed length: 0
-            wasHandled = emberAfOnOffClusterOnCallback();
-            break;
-        }
-        case ZCL_TOGGLE_COMMAND_ID: {
-            // Command is fixed length: 0
-            wasHandled = emberAfOnOffClusterToggleCallback();
             break;
         }
         default: {
