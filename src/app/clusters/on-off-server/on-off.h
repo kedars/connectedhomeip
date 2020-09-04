@@ -29,7 +29,7 @@ extern "C" {
 #endif
 
 // Cluster: On/off, server
-EmberAfStatus emberAfOnOffClusterServerCommandParse(EmberAfClusterCommand * cmd);
+EmberAfStatus OnOffClusterServerCommandParse(EmberAfClusterCommand * cmd);
 
 #ifdef __cplusplus
 }
@@ -37,7 +37,7 @@ EmberAfStatus emberAfOnOffClusterServerCommandParse(EmberAfClusterCommand * cmd)
 
 Cluster ClusterServerOnOff()
 {
-    return Cluster(ChipOnOffClusterId, emberAfOnOffClusterServerCommandParse);
+    return Cluster(ChipOnOffClusterId, OnOffClusterServerCommandParse);
 }
 
 Cluster ClusterClientOnOff()

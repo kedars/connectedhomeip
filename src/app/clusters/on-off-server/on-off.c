@@ -152,7 +152,7 @@ EmberAfStatus emberAfOnOffClusterSetValueCallback(uint8_t endpoint, uint8_t comm
     return EMBER_ZCL_STATUS_SUCCESS;
 }
 
-bool emberAfOnOffClusterOffCallback(void)
+bool OnOffClusterOffCallback(void)
 {
     EmberAfStatus status = emberAfOnOffClusterSetValueCallback(emberAfCurrentEndpoint(), ZCL_OFF_COMMAND_ID, false);
 #ifdef EMBER_AF_PLUGIN_ZLL_ON_OFF_SERVER
@@ -165,7 +165,7 @@ bool emberAfOnOffClusterOffCallback(void)
     return true;
 }
 
-bool emberAfOnOffClusterOnCallback(void)
+bool OnOffClusterOnCallback(void)
 {
     EmberAfStatus status = emberAfOnOffClusterSetValueCallback(emberAfCurrentEndpoint(), ZCL_ON_COMMAND_ID, false);
 #ifdef EMBER_AF_PLUGIN_ZLL_ON_OFF_SERVER
@@ -178,7 +178,7 @@ bool emberAfOnOffClusterOnCallback(void)
     return true;
 }
 
-bool emberAfOnOffClusterToggleCallback(void)
+bool OnOffClusterToggleCallback(void)
 {
     EmberAfStatus status = emberAfOnOffClusterSetValueCallback(emberAfCurrentEndpoint(), ZCL_TOGGLE_COMMAND_ID, false);
 #ifdef EMBER_AF_PLUGIN_ZLL_ON_OFF_SERVER
@@ -277,7 +277,7 @@ static bool areStartUpOnOffServerAttributesTokenized(uint8_t endpoint)
 #endif
 
 // Cluster: On/off, server
-EmberAfStatus emberAfOnOffClusterServerCommandParse(EmberAfClusterCommand * cmd)
+EmberAfStatus OnOffClusterServerCommandParse(EmberAfClusterCommand * cmd)
 {
     bool wasHandled = false;
     if (!cmd->mfgSpecific)
@@ -286,17 +286,17 @@ EmberAfStatus emberAfOnOffClusterServerCommandParse(EmberAfClusterCommand * cmd)
         {
         case ZCL_OFF_COMMAND_ID: {
             // Command is fixed length: 0
-            wasHandled = emberAfOnOffClusterOffCallback();
+            wasHandled = OnOffClusterOffCallback();
             break;
         }
         case ZCL_ON_COMMAND_ID: {
             // Command is fixed length: 0
-            wasHandled = emberAfOnOffClusterOnCallback();
+            wasHandled = OnOffClusterOnCallback();
             break;
         }
         case ZCL_TOGGLE_COMMAND_ID: {
             // Command is fixed length: 0
-            wasHandled = emberAfOnOffClusterToggleCallback();
+            wasHandled = OnOffClusterToggleCallback();
             break;
         }
         default: {
