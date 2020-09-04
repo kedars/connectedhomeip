@@ -22,7 +22,7 @@
 #include <clusters/clusters.h>
 
 /* This is duplicated right now, currently all defined in main/gen/cluster-id.h */
-constexpr ClusterId ChipOnOffClusterId = 0x0006;
+static constexpr ClusterId ChipOnOffClusterId = 0x0006;
 
 #ifdef __cplusplus
 extern "C" {
